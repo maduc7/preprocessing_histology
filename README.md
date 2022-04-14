@@ -4,7 +4,7 @@ Preprocess whole slides images and extracting tiles:
 - Extracting tiles at different magnifications
 
 ### Dataset:
-Test dataset
+Test dataset with 5 images
 
 ## Table of contents
 
@@ -18,7 +18,6 @@ Test dataset
 ## Installation
 
 ## Documentation
-
 
 ## Example
 ![Alt text](./images/histo_process_pipeline.png?raw=true "Preprocessing pipeline")
@@ -35,7 +34,7 @@ Test dataset
 
 ## License and citing
 
-_License_: Check the [License](https://github.com/maduc7/preprocessing_histology/LICENSE) (Apache)
+_License_: Check the [License](https://github.com/maduc7/preprocessing_histology/LICENSE) (MIT)
 
 _Citing_: 
 
