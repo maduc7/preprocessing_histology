@@ -3,6 +3,30 @@
 Preprocess whole slides images and extracting tiles:
 - Extracting tiles at different magnifications
 
+# Project organization
+
+    ├── README.md          
+    ├── data
+    │   ├── tiles       
+    │   ├── processed      
+    │   └── raw  
+    │
+    ├── images 
+    │
+    ├── requirements.txt
+    │
+    ├── setup.py           
+    │
+    ├── src
+    │   ├── __init__.py
+    │   │
+    │   ├── utils.py
+    │   │
+    │   └── visualization
+    │       └── visualize.py
+    │
+    └── ...
+
 ### Dataset:
 Can found test examples on [TCGA portal](https://portal.gdc.cancer.gov/repository)
 
