@@ -4,7 +4,7 @@ Preprocess whole slides images and extracting tiles:
 - Extracting tiles at different magnifications
 
 ### Dataset:
-Test dataset with 5 images
+Can found test examples on [TCGA portal](https://portal.gdc.cancer.gov/repository)
 
 ## Table of contents
 
