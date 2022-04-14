@@ -21,7 +21,7 @@ Test dataset
 
 
 ## Example
-![alt text](https://github.com/maduc7/histology_segmentation/images/histo_process_pipeline.png?raw=true)
+![Alt text](./images/histo_process_pipeline.png?raw=true "Preprocessing pipeline")
 
 ## Results
 
