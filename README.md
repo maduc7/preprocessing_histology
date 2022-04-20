@@ -5,7 +5,10 @@ Preprocess whole slides images and extracting tiles:
 
 # Project organization
 
-    ├── README.md          
+    ├── README.md
+    ├── config
+    │   └── config_test.yaml
+    │
     ├── data
     │   ├── tiles       
     │   ├── processed      
