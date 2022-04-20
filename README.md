@@ -1,7 +1,7 @@
 # !!WORK IN PROGESS!!
 # Preprocessing of Whole Slides Images (WSI) histology data
 Preprocess whole slides images and extracting tiles:
-- Extracting tiles at different magnifications
+- Extracting tiles of H&E histology slides at different magnifications
 
 # Project organization
 
