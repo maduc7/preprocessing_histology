@@ -35,6 +35,20 @@ def create_dir(path_dir: str,
     return new_dir
 
 
+def create_folder(path_folder: str,
+                  verbose: bool = False
+                  ) -> None:
+    """
+
+    :param path_folder:
+    :param verbose:
+    :return:
+    """
+    if not os.path.exists(path_folder):
+        if verbose: print("Creating folder {}".format(path_folder))
+        os.makedirs(path_folder)
+
+
 def load_yaml_config(config_path: str,
                      verbose: bool = False
                      ) -> dict:
@@ -164,6 +178,25 @@ def np_to_pil(np_img: np.ndarray,
     """
     if verbose: print("Convert numpy array to PIL image")
     return Image.fromarray(np_img)
+
+
+def save_pil_image(pil_img: Image,
+                   path_save: str,
+                   extension_save: str = 'tiff',
+                   verbose: bool = False
+                   ) -> None:
+    """
+    save PIL image
+    :param pil_img: pil image
+    :param path_save: path to the image to save
+    :param extension_save: extension of the image
+    :param verbose:
+    :return: None
+    """
+    if verbose:
+        print("Saving PIL image as: ", path_save+"."+extension_save)
+
+    pil_img.save(path_save, extension_save)
 
 
 def np_rgb_to_np_gray(rgb_np: np.ndarray,
