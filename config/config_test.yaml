@@ -1,10 +1,10 @@
 DATA:
-  DATA_SOURCE: data/raw
-  DATA_SAVE: data/tiles
+  DATA_SOURCE: ../data/raw/
+  DATA_SAVE: ../data/tiles/
   DATASET_NAMES: Test
   EXTENSION_SAVE: tiff
 PARAMETERS:
-  MAGNIFICATION: [5, 10, 20, 40]
+  MAGNIFICATIONS: [5, 10, 20, 40]
   NB_TILES: 5
   OVERLAP:
     NB_PIXEL: 0
