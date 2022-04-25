@@ -1,9 +1,12 @@
 DATA:
   DATA_SOURCE: ../data/raw/
   DATA_SAVE: ../data/tiles/
+  DATA_SAVE_PLOT: ../data/plot/
   DATASET_NAMES: Test
   EXTENSION_SAVE: tiff
+  SAVE_PLOT_IMG: True
 PARAMETERS:
+  DOWNSAMPLE_FACTOR: 64
   MAGNIFICATIONS: [5, 10, 20, 40]
   NB_TILES: 5
   OVERLAP:
