@@ -11,6 +11,18 @@ import yaml
 def process_one_image(img_path: str,
                       config: yaml
                       ) -> None:
+    """
+    Extract the tissue of one image by doing the following steps:
+    1) detect part of the images that are black, blue, red or green (which could be pen drawing)
+    2) replace those pen drawing with white
+    3) use Otsu thresholding to detect tissue
+    4) remove columns and rows that are mainly white
+    5) save tissue cropped image
+
+    :param img_path: path to the image
+    :param config: config file
+    :return:
+    """
     # name image
     img_name = os.path.splitext(os.path.basename(img_path))[0]
     print(img_name)
@@ -132,6 +144,12 @@ def process_one_image(img_path: str,
 
 def slide_crop_single_processing(config: yaml
                                  ) -> None:
+    """
+    crop one single image at a time
+
+    :param config:
+    :return:
+    """
     img_dir_path = config["DATA"]["DATA_SOURCE"]
     # loop over all images from the class
     for img_path in glob.glob(img_dir_path+'/*'):
@@ -140,6 +158,12 @@ def slide_crop_single_processing(config: yaml
 
 def slide_crop_multi_processing(config: yaml
                                 ) -> None:
+    """
+    crop multiple images at a time using concurrent.futures
+
+    :param config:
+    :return:
+    """
     img_dir_path = config['DATA']['DATA_SOURCE']
     with concurrent.futures.ProcessPoolExecutor() as executor:
         # list of files to process
@@ -157,9 +181,6 @@ if __name__ == '__main__':
     config = utils.load_yaml_config(config_path=CONFIG_NAME)
     print(config)
 
-    ##########################################
-    #       Parameters initialization        #
-    ##########################################
     # process data in parallel
     multi_process = config['MULTI_PROCESSING']
 
