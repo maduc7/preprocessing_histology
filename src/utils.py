@@ -134,6 +134,23 @@ def load_pil_img(img_path: str,
     return Image.open(img_path)
 
 
+def crop_img_from_mask(img_np: np.ndarray,
+                       mask_np: np.ndarray,
+                       mask_to_img_down_factor: int
+                       ) -> np.ndarray:
+    """
+    Extract part of the image where mask is true (1)
+    :param img_np:
+    :param mask_np:
+    :param mask_to_img_down_factor:
+    :return:
+    """
+    mask_np = np.kron(mask_np, np.ones((mask_to_img_down_factor, mask_to_img_down_factor), dtype=mask_np.dtype))
+    assert mask_np.shape[0] == img_np.shape[0] and mask_np.shape[1] == img_np.shape[1]
+    # crop image where mask
+    return img_np[np.ix_(mask_np.any(1), mask_np.any(0))]
+
+
 def save_pil_img(pil_img: Image,
                  path_save: str,
                  ext: str = "tiff",
