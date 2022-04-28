@@ -82,7 +82,6 @@ def extract_random_patches(save_path_mag: str,
     i = 0
     idx = 0
     while i < nb_idx and idx < nb_max_patches:
-        print("nb patch: ", i, idx)
         # get the corresponding row and column from the index
         r = int(random_idx[idx] / nb_col)
         c = random_idx[idx] % nb_col
@@ -99,7 +98,6 @@ def extract_random_patches(save_path_mag: str,
                                ext=config['DATA']['EXTENSION_SAVE'])
         else:
             # save tiles in background plot to check that this works well!!!
-            print("This is a background tile")
             save_path = path_save_bckg + img_name + "_" + str(idx)
             utils.save_pil_img(pil_img=utils.np_to_pil(img_tile),
                                path_save=save_path,
