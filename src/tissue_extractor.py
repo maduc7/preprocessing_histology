@@ -114,32 +114,58 @@ def process_one_image(img_path: str,
                                 )
 
     # otsu thresholding on the grayscale images that has no black or pen marks
-    mask = utils.otsu_thresholding(np_gray)
+    otsu_mask = utils.otsu_thresholding(np_gray)
     if save_img:
         path_save_otsu_img = save_path_plot + "otsu/"
         utils.create_folder(path_save_otsu_img, verbose)
-        utils.save_pil_img(utils.np_to_pil(mask),
+        utils.save_pil_img(utils.np_to_pil(otsu_mask),
                            path_save_otsu_img + img_name,
                            config['DATA']['EXTENSION_SAVE'],
                            verbose=verbose
                            )
 
-    new_np_img_avg_col = np.mean(mask, axis=0)
-    new_np_img_avg_row = np.mean(mask, axis=1)
+    new_np_img_avg_col = np.mean(otsu_mask, axis=0)
+    new_np_img_avg_row = np.mean(otsu_mask, axis=1)
 
     otsu_threshold = config['PARAMETERS']['OTSU']['THRESHOLD']
 
-    # delete rows where mostly white background
-    new_np_img = np.delete(np_rgb, np.where(new_np_img_avg_row < otsu_threshold), axis=0)
-    # delete columns where mostly white background
-    new_np_img = np.delete(new_np_img, np.where(new_np_img_avg_col < otsu_threshold), axis=1)
+    # get rows where mostly white background
+    idx_del_rows = np.where(new_np_img_avg_row < otsu_threshold)
+    # get columns where mostly white background
+    idx_del_cols = np.where(new_np_img_avg_col < otsu_threshold)
 
-    path_save_crop_img = save_path_plot + "crop/"
-    utils.create_folder(path_save_crop_img, verbose)
-    save_img_path = path_save_crop_img + img_name
-    utils.save_pil_img(utils.np_to_pil(new_np_img), save_img_path, saving_ext_format)
+    if save_img:
+        # delete rows where mostly white background
+        new_np_img = np.delete(np_rgb, np.where(new_np_img_avg_row < otsu_threshold), axis=0)
+        # delete columns where mostly white background
+        new_np_img = np.delete(new_np_img, np.where(new_np_img_avg_col < otsu_threshold), axis=1)
+        path_save_crop_img = save_path_plot + "crop/"
+        utils.create_folder(path_save_crop_img, verbose)
+        save_img_path = path_save_crop_img + img_name
+        utils.save_pil_img(utils.np_to_pil(new_np_img), save_img_path, saving_ext_format)
 
-    print("save new slide as: ", save_img_path)
+    # create a mask of where there is tissue and where it is background
+    save_mask = '../data/masks/'
+    utils.create_folder(save_mask, verbose)
+    save_crop_img_mask_path = save_mask + img_name + '_df_' + str(config['PARAMETERS']['DOWNSAMPLE_FACTOR'])
+
+    # remove small objects
+    idx_del_rows, idx_del_cols = utils.filter_small_part(idx_row_np=idx_del_rows,
+                                                         idx_col_np=idx_del_cols,
+                                                         img_np_shape=otsu_mask.shape,
+                                                         tolerance=config['PARAMETERS']['SMALL_OBJ']['TOLERANCE'])
+    # keep small objects
+    idx_del_rows, idx_del_cols = utils.fill_small_part(bool_row_np=idx_del_rows,
+                                                       bool_col_np=idx_del_cols,
+                                                       tolerance=config['PARAMETERS']['SMALL_OBJ']['TOLERANCE'])
+
+    mask = np.ones_like(otsu_mask)
+    mask[~idx_del_rows, :] = 0
+    mask[:, ~idx_del_cols] = 0
+    assert mask.shape == np_gray.shape
+
+    utils.save_pil_img(utils.np_to_pil(mask), save_crop_img_mask_path, saving_ext_format)
+    print("save cropping mask as: ", save_crop_img_mask_path)
 
 
 def slide_crop_single_processing(config: yaml
