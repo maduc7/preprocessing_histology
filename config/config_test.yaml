@@ -1,5 +1,6 @@
 DATA:
   DATA_SOURCE: ../data/raw/
+  DATA_SAVE_TISSUE_MASKS: ../data/masks/
   DATA_SAVE_TILES: ../data/tiles/
   DATA_SAVE_PLOT: ../data/plot/
   DATASET_NAMES: Test

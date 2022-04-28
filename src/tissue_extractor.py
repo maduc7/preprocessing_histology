@@ -145,7 +145,7 @@ def process_one_image(img_path: str,
         utils.save_pil_img(utils.np_to_pil(new_np_img), save_img_path, saving_ext_format)
 
     # create a mask of where there is tissue and where it is background
-    save_mask = '../data/masks/'
+    save_mask = config['DATA']['DATA_SAVE_TISSUE_MASKS']
     utils.create_folder(save_mask, verbose)
     save_crop_img_mask_path = save_mask + img_name + '_df_' + str(config['PARAMETERS']['DOWNSAMPLE_FACTOR'])
 
