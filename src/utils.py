@@ -464,3 +464,46 @@ def filter_grays(np_img: np.ndarray,
     gb_diff = abs(np_img[:, :, 1] - np_img[:, :, 2]) <= tolerance
 
     return ~(rg_diff & rb_diff & gb_diff)
+
+
+def filter_small_part(idx_row_np: np.ndarray,
+                      idx_col_np: np.ndarray,
+                      img_np_shape: Tuple[int],
+                      tolerance: int = 2
+                      ) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Remove rows and columns that have less than tolerance pixels width
+
+    :param idx_row_np: list of indices of rows to remove
+    :param idx_col_np: list of indices of columns to remove
+    :param img_np_shape: shape of the image
+    :param tolerance: number of pixels considered as an object to keep
+    :return: vectors of boolean of rows and columns that should keep
+    """
+    from skimage import morphology
+    row_np = np.ones(img_np_shape[0], bool)
+    row_np[idx_row_np] = False
+    row_np = morphology.remove_small_objects(row_np, tolerance)
+
+    col_np = np.ones(img_np_shape[1], bool)
+    col_np[idx_col_np] = False
+    col_np = morphology.remove_small_objects(col_np, tolerance)
+    return row_np, col_np
+
+
+def fill_small_part(bool_row_np: np.ndarray,
+                    bool_col_np: np.ndarray,
+                    tolerance: int = 2
+                    ) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Fill rows and columns that are less than tolerance pixels width
+
+    :param bool_row_np: boolean of rows to keep
+    :param bool_col_np: boolean of columns to keep
+    :param tolerance: number of pixels considered as an object to keep
+    :return: vectors of boolean of rows and columns that should keep
+    """
+    from skimage import morphology
+    row_np = morphology.remove_small_holes(bool_row_np, tolerance)
+    col_np = morphology.remove_small_holes(bool_col_np, tolerance)
+    return row_np, col_np
