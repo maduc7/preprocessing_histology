@@ -159,6 +159,16 @@ def process_one_image(img_path: str,
                                                        bool_col_np=idx_del_cols,
                                                        tolerance=config['PARAMETERS']['SMALL_OBJ']['TOLERANCE'])
 
+    if save_img:
+        # delete rows where mostly white background
+        new_np_img = np.delete(np_rgb, np.where(idx_del_rows == False), axis=0)
+        # delete columns where mostly white background
+        new_np_img = np.delete(new_np_img, np.where(idx_del_cols == False), axis=1)
+        path_save_crop_img = save_path_plot + "crop/"
+        utils.create_folder(path_save_crop_img, verbose)
+        save_img_path = path_save_crop_img +img_name+'_final'
+        utils.save_pil_img(utils.np_to_pil(new_np_img), save_img_path, saving_ext_format)
+
     mask = np.ones_like(otsu_mask)
     mask[~idx_del_rows, :] = 0
     mask[:, ~idx_del_cols] = 0
